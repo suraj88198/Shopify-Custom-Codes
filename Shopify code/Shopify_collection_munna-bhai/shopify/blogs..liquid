@@ -1,0 +1,21 @@
+<div class="blogSec">
+  <div class="wrapper">
+    <h2 class="secTitle">our blogs</h2>
+    <div class="viewallLink">
+    	<a href="/blogs/news">View All</a>
+    </div>
+    <div class="blogBoxes">
+      {% assign blog = blogs.news %}
+      {% for article in blog.articles limit: 1 %}
+          <div class="blogBox">
+            <div class="blogCntn">
+            <h3 class="blogTitle">{{ article.title | link_to: article.url }}</h3>
+            <div class="blogDt">{{ 'blogs.article.author_on_date_html' | t: author: article.author, date: published_at }}</div>
+            <p>{{ article.content | strip_html | truncatewords: 20}} <a class="moreLink" href="{{ article.url }}">Read More &raquo;</a></p>
+
+             </div>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>

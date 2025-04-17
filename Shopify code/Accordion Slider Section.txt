@@ -1,0 +1,141 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.shopify.com/s/files/1/0662/4139/7021/t/1/assets/accordion-slider.min.css" media="screen">
+<script type="text/javascript" src="https://cdn.shopify.com/s/files/1/0662/4139/7021/t/1/assets/jquery.accordionSlider.min.js" defer></script>
+
+<div class="page-width">
+  {% if section.settings.maintitle != blank %}
+    <h2 class="secTitle ">{{ section.settings.maintitle }}</h2>
+  {% endif %}
+</div>
+
+<div id="example1" class="accordion-slider container">
+  <div class="as-panels">
+    {% for block in section.blocks %}
+      <div class="as-panel">
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+            <img class="as-background" src="{{ block.settings.image | img_url: 'master' }}" data-src="{{ block.settings.image | img_url: 'master' }}" width="" height="">
+          </a>
+
+          <div
+            class="as-layer as-closed sliderMainTitle as-vertical panel-counter"
+            data-position="bottomLeft"
+            data-horizontal="0"
+            data-vertical="0"
+          >
+            {{ block.settings.title }}
+          </div>
+
+          <h3
+            class="as-layer as-opened sliderHeading"
+            data-horizontal="93"
+            data-vertical="12%"
+            data-show-transition="left"
+            data-hide-transition="left"
+          >
+            {{ block.settings.title }}
+          </h3>
+
+          <p
+            class="as-layer as-opened sliderSubheading hide-medium-screen"
+            data-horizontal="93"
+            data-vertical="27%"
+            data-show-transition="left"
+            data-show-delay="200"
+            data-hide-transition="left"
+            data-hide-delay="200"
+          >
+            {{ block.settings.subtitle }}
+          </p>
+
+          <p
+            class="as-layer as-opened sliderBtn hide-small-screen"
+            data-horizontal="93"
+            data-vertical="43%"
+            data-width="350"
+            data-show-transition="left"
+            data-show-delay="400"
+            data-hide-transition="left"
+            data-hide-delay="500"
+          >
+            <a href="{{ block.settings.link }}" class="btn">{{ block.settings.btn }}</a>
+          </p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Accordion Slider",
+  "class": "accordionSec",
+  "max_blocks": 9,
+  "settings": [
+  {
+          "type": "text",
+          "id": "maintitle",
+          "label": "Title"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "btn",
+          "label": "Button"
+        },
+  {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion Slider",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+.accordion-slider .as-panels .as-panel { border-left:6px solid #fff;  }
+.accordion-slider .as-panels .sliderHeading { color: #fff; font-size: 65px; font-family: "GoodTimesW00-Bold"; font-weight: normal; line-height: normal; letter-spacing: 0; }
+.accordion-slider .as-panels .sliderSubheading  {  cursor: pointer; color: #fff; font-size: 20px; line-height: 30px; font-weight: normal; letter-spacing: 0;  }
+.accordion-slider .as-panels .btn {padding: 13px 30px 14px; border: 1px solid #ffffff; color: #ffffff; font-size: 20px;}
+.accordion-slider .as-panels .sliderMainTitle { min-width: 576px; line-height: 95px; text-align: center; color: #fff; font-size: 40px; text-transform: uppercase; font-weight: bold; letter-spacing: 0; font-family: 'Barlow Condensed', sans-serif; }
+{% endstylesheet %}

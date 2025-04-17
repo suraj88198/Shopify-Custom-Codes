@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Toggleable Search Form - Template Monster Demo</title>
+  <link rel="shortcut icon" href="http://static.tmimgcdn.com/img/favicon.ico">
+  <link rel="icon" href="http://static.tmimgcdn.com/img/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="searchlink" id="searchlink">
+      <i class="fa fa-search"></i>
+      <div class="searchform">
+        <form id="search">
+          <input type="text" class="s" id="s" placeholder="keywords...">
+          <button type="submit" class="sbtn"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+<script type="text/javascript">
+  $(function() {
+    var $searchlink = $('#searchlink');
+
+    // hover effect
+    /*$searchlink.on('mouseover', function(){
+      $(this).addClass('open');
+    }).on('mouseout', function(){
+      $(this).removeClass('open');
+    });*/
+
+   //on click effect
+    $searchlink.on('click', function(e){
+      var target = e ? e.target : window.event.srcElement;
+
+      if($(target).attr('id') == 'searchlink') {
+        if($(this).hasClass('open')) {
+          $(this).removeClass('open');
+        } else {
+          $(this).addClass('open');
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

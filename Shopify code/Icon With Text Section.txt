@@ -1,0 +1,64 @@
+<div class="page-width">
+  <div class="servicesRow">
+    {% for block in section.blocks %}
+      <div class="servicesCol">
+        <div class="servicesImg">
+          {% if block.settings.icon != blank %}
+            {{ block.settings.icon }}
+          {% endif %}
+        </div>
+        <div class="servicesHeading">{{ block.settings.title }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Services Section",
+  "class": "servicesSec",
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "icon",
+          "label": "SVG image code"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Service Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services Section",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+.servicesSec{ padding: 40px 0px;}
+.servicesSec .servicesRow { display: flex; flex-wrap: wrap;}
+.servicesSec .servicesRow .servicesCol { width: 25%; display: flex; align-items: center; justify-content: center; gap: 15px; }
+.servicesSec .servicesCol .servicesImg svg{ color: #EF9001; transition: all 0.5s ease;}
+.servicesSec .servicesCol .servicesHeading { color: #000; font-family: Manrope; font-size: 20px; font-style: normal; font-weight: 500; line-height: normal; transition: all 0.5s ease;}
+.servicesSec .servicesCol:hover .servicesImg svg{ color: #3B552E;}
+.servicesSec .servicesCol:hover .servicesHeading { color: #3B552E;}
+
+{% endstylesheet %}

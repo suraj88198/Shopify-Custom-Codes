@@ -1,0 +1,46 @@
+<div class="container">
+<div class="main_video_content">
+  {% for block in section.blocks %}
+  <div class="videoBlock">
+      {% if block.settings.selected_video %}
+         <div class="new_video">
+          {{  block.settings.selected_video  | video_tag: image_size: '250px', loop: true, autoplay: true, muted: true, controls:true }}
+        </div>
+      {% endif %}
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "New Video Section",
+	  "class": "custom_videoSec",
+    "max_blocks": 9,
+    "settings": [
+	],
+  "blocks": [
+      {
+        "type": "video",
+        "name": "video",
+        "settings": [
+        {
+          "type": "video",
+          "label": "Select Video",
+          "id": "selected_video"
+        }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Video Section",
+		    "category": "New"
+      }
+    ]
+  }
+{% endschema %}
+
+
+
+background: -webkit-linear-gradient(left, rgba(251,165,35,1) 0%, rgba(250,87,87,1) 25%, rgba(242,54,104,1) 50%, rgba(180,55,122,1) 74%, rgba(95,54,122,1) 100%);

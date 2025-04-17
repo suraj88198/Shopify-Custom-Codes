@@ -1,0 +1,90 @@
+<div class="wrapper">
+  <div class="shopImg">
+      {% if section.settings.img != blank %}
+      <img src="{{ section.settings.img | img_url: 'master' }}">
+      {% endif %}
+    </div>
+  <div class="shopContent">
+      <h2>{{ section.settings.heading }}</h2>
+      {{ section.settings.text }}
+      <div class="shopBlock">
+        {% for block in section.blocks %}
+        <div class="col">
+          {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" class="colIn">
+            <span class="shop_ic">
+              <img src="{{ block.settings.shop_ic | img_url: 'master' }}" alt="">
+              {% if block.settings.shop_ic == blank %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}	  
+            </span>
+            {% if block.settings.shopTitle != blank %}
+            <span class="shopTitle"><strong>{{ block.settings.shopTitle }}</strong>{{ block.settings.shop_sub_title }}</span>
+            {% endif %}
+          </a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Shop Now Section",
+    "class": "shopSec",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id":"img",
+          "label":"select images"
+        },
+        {
+			"type":"text",
+			"id":"heading",
+			"label":"Enter Heading"
+		},
+		{
+			"type":"richtext",
+			"id":"text",
+			"label":"Enter Text"
+		}
+
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "shop_ic",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "shopTitle",
+            "label": "Shop Title"
+          },
+          {
+            "type": "text",
+            "id": "shop_sub_title",
+            "label": "Shop sub Title"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shop Now Section",
+        "category": "New"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,90 @@
+<div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="service_heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="serviceBlock">
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'icon' -%}
+            <div class="col">
+              {% if block.settings.icon_image != blank %}
+                <div class="ser_ic">
+                  <img src="{{ block.settings.icon_image | img_url: 'master' }}" alt="">
+                </div>
+              {% endif %}
+              {% if block.settings.ser_title != blank %}
+                <div class="ser_title">{{ block.settings.ser_title }}</div>
+              {% endif %}
+            </div>
+          {%- when 'image' -%}
+            {% if block.settings.image != blank %}
+              <div class="ser_image">
+                <img src="{{ block.settings.image | img_url: 'master' }}" alt="">
+              </div>
+            {% endif %}
+        {%- endcase -%}
+      {% endfor %}
+    </div>
+  </div>
+  
+  {% schema %}
+  {
+    "name": "Services Thumbnail",
+    "class": "serviceSec",
+    "max_blocks": 9,
+    "settings": [
+       {
+        "type":"text",
+        "id":"heading",
+        "label":"Enter Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "icon",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon_image",
+            "label": "Select Icon"
+          },
+          {
+            "type": "text",
+            "id": "ser_title",
+            "label": "Services Title"
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Services Thumbnail",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}
+  

@@ -1,0 +1,93 @@
+<div class="slide-list">
+  {% for block in section.blocks %}
+    <div class="slide_box">
+      {% if block.settings.link != blank %}
+        <a href="{{ block.settings.link }}">
+          <img class="desk_img" src="{{ block.settings.desktop_image | img_url: 'master' }}" alt="">
+          <img class="mobile_img" src="{{ block.settings.mobile_image | img_url: 'master' }}" alt="">
+        </a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+  
+$('.single-slider .slide-list').slick({
+  dots: false,
+  arrows:true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 1,
+});
+  
+</script>  
+
+<style>
+@media (min-width: 992px) {
+.single-slider .mobile_img {
+  display: none;
+}
+}
+@media (max-width: 991px) {
+.single-slider .desk_img {
+  display: none;
+}
+}
+</style>
+
+{% schema %}
+{
+  "name": "Homepage Slider",
+  "class": "single-slider",
+  "max_blocks": 9,
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage Slider",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

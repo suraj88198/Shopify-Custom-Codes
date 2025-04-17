@@ -1,0 +1,123 @@
+<div class="container">
+  <h2>
+    {{ section.settings.heading }}
+  </h2>
+  <ul class="accordion">
+    {% for block in section.blocks %}
+    <li>
+      {% if block.settings.faq_title != blank %}
+      <h3>{{ block.settings.faq_title }}</h3>
+      {% endif %}
+      {% if block.settings.faq_text != blank %}
+      <ul>
+        <li>
+          {{ block.settings.faq_text }}
+        </li>
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<style media="screen">
+.accordion
+{   list-style: none;
+   padding:0;
+   margin:0;
+}
+.accordion h3
+{   margin:0 0 0.278em;                        /* BASE FONT = 18px >>> 0 0 5px/18px = 0 0 0.278em */
+   padding:0.278em 0.556em;                        /* BASE FONT = 18px >>> 5px 10px/18px = 0.278em 0.556em */
+   background:#09399D url(../images/plus.png) no-repeat right;
+   color:#FFF;
+   text-transform:none;
+   cursor:pointer;
+}
+.accordion ul[style="display: block;"] .accordion1 {display:block !important;}
+.accordion > li > ul {display:none;}
+.accordion1 > li > ul {display:none;}
+.accordion ul {
+   margin:1em 0;
+   font-size:1.125em;                                    /* BASE FONT = 16px >>> 18px/16px = 1.125em */
+   color:#000;
+   padding:0 0 0 1.5em;
+   list-style:disc;
+}
+.accordion ol li{ color:#6E6E6E;}
+.accordion li.active h3{  background:#FF0001 url(../images/minus.png) no-repeat right;}
+.accordion ol{ margin-bottom:0.75em;}
+</style>
+<script type="text/javascript">
+$(".accordion > li > h3").click(function(){
+
+	if(false == $(this).next().is(':visible')) {
+		$('.accordion ul').slideUp(300);
+	}
+
+	var classnm = $(this).parent('li').attr("class");
+	// Line Added to remove the active class from all 'li'
+	$('.accordion > li').removeClass('active');
+	// Line Added to remove the blank attribute of class from all 'li'
+	$('.accordion > li[class=""]').removeAttr('class');
+	// Line Added to add the active class in current 'li'
+
+	$(this).next().slideToggle(300);
+
+	if(classnm == "undefined" || classnm == "" || classnm == undefined){
+		$(this).parent('li').addClass('active');
+	}
+});
+
+$('.accordion ul:eq(0)').show();
+</script>
+
+{% schema %}
+  {
+    "name": "Homepage accordian",
+    "class": "home_faq",
+    "max_blocks": 9,
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Accordian",
+        "settings": [
+          {
+            "type": "text",
+            "id": "faq_title",
+            "label": "Faq Title"
+          },
+          {
+            "type": "text",
+            "id": "faq_text",
+            "label": "Faq Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Homepage accordian",
+        "category": "New",
+        "blocks": [
+          {
+            "type": "text"
+          },
+          {
+            "type": "text"
+          },
+          {
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

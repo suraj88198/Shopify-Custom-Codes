@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="assets/owl.carousel.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="assets/owl.carousel.min.js"></script>
+<script type="text/javascript">
+   jQuery(document).ready(function() {
+		   if ($(".products-slider .product-list").length>0) {
+    		$(".products-slider .product-list").owlCarousel({
+    			items : 4,
+    			itemsCustom : false,
+    			scrollPerPage: true,
+    			loop: true,
+    			slideSpeed: 500,
+    			stopOnHover: true,
+    			itemsDesktop : [1199,4],
+    			itemsDesktopSmall : [991,3],
+    			itemsTablet: [767,2],
+    			itemsTabletSmall: false,
+    			itemsMobile : [479,1],
+    			itemsScaleUp : true,
+    			pagination : false,
+    			navigation : false,
+    			navigationText : ["prev","next"]
+
+    		});
+    	}
+	});
+</script>
+
+
+<div class="products-slider">
+	<h1>Featured product</h1>
+	<ul class="product-list">
+    	<li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+    </ul>
+</div>

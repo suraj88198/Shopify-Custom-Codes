@@ -1,0 +1,91 @@
+<div class="wrapper">
+  <h2 class="catText">
+    {{ section.settings.title }}
+  </h2>
+  <div class="catBlock">
+    {% case section.blocks.size %}
+    {% when 1 %}
+    {%- assign column_size = '' -%}
+    {% when 2 %}
+    {%- assign column_size = 'medium-up--one-half' -%}
+    {% when 3 %}
+    {%- assign column_size = 'medium-up--one-third' -%}
+    {% else %}
+    {%- assign column_size = 'medium-up--one-quarter' -%}
+    {% endcase %}
+
+    {% for block in section.blocks %}
+    <div class="col">
+      {% if block.settings.link != blank %}
+      <a href="{{ block.settings.link }}" class="colIn">
+        <span class="catImg">
+          <img src="{{ block.settings.image | img_url: 'master' }}" alt="">
+        </span>
+        {% if block.settings.image == blank %}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+        {% if block.settings.catTitle != blank %}
+        <span class="catTitle">{{ block.settings.catTitle }}</span>
+        {% endif %}
+      </a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Categories Thumbnail",
+    "class": "catSec",
+    "max_blocks": 9,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "catTitle",
+            "label": "Categories Title"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Categories Thumbnail",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

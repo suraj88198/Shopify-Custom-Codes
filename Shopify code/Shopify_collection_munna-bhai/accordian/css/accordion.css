@@ -1,0 +1,30 @@
+
+/* =============================================================================
+   Accordion Page
+* ============================================================================= */
+.accordion
+{   list-style: none;
+   padding:0;
+   margin:0;
+}
+.accordion h3
+{   margin:0 0 0.278em;                        /* BASE FONT = 18px >>> 0 0 5px/18px = 0 0 0.278em */
+   padding:0.278em 0.556em;                        /* BASE FONT = 18px >>> 5px 10px/18px = 0.278em 0.556em */
+   background:#09399D url(../images/plus.png) no-repeat right;
+   color:#FFF;
+   text-transform:none;
+   cursor:pointer;
+}
+.accordion ul[style="display: block;"] .accordion1 {display:block !important;}
+.accordion > li > ul {display:none;}
+.accordion1 > li > ul {display:none;}
+.accordion ul {
+   margin:1em 0;
+   font-size:1.125em;                                    /* BASE FONT = 16px >>> 18px/16px = 1.125em */
+   color:#000;
+   padding:0 0 0 1.5em;
+   list-style:disc;
+}
+.accordion ol li{ color:#6E6E6E;}
+.accordion li.active h3{  background:#FF0001 url(../images/minus.png) no-repeat right;}
+.accordion ol{ margin-bottom:0.75em;}

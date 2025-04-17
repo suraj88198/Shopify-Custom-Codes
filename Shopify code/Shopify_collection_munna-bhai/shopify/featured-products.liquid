@@ -1,0 +1,241 @@
+<div id="CollectionSection" data-section-id="{{ section.id }}" data-section-type="collection-template" data-grid-type="{{ section.settings.collection_products_grid }}">
+  <div class="page-width">
+    <div class="collection_img">
+      {% if section.settings.collection_img != blank %}
+      <img src="{{ section.settings.collection_img | img_url: 'master' }}">
+      {% endif %}
+      {% if section.settings.title != blank %}
+      <div class="pageTitle">
+        <h2>{{ section.settings.title | escape }}</h2>
+        <div class="view_all_collection">
+        <a href="{{ section.settings.home_featured_products.url }}"
+        class=""
+        aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.home_featured_products.title }}"
+      >
+        {{ 'sections.featured_collection.view_all' | t }}
+      </a>
+        </div>
+      </div>
+      {% endif %}
+
+
+    </div>
+
+    <div class="collection_right">
+      <div class="home-product-list grid-uniform">
+
+        {% if section.settings.home_featured_products == blank or collections[section.settings.home_featured_products] == empty or collections[section.settings.home_featured_products].products_count == 0 %}
+
+        {% comment %}
+        For onboarding new users to your theme, we add some default products and onboarding tutorials to help populate their store
+        {% endcomment %}
+        {% unless emptyState %}
+        {% assign emptyState = true %}
+        {% endunless %}
+        {% include 'onboarding-featured-products' %}
+        {% else %}
+
+        {% assign grid_item_width = 'medium--one-half large--one-third' %}
+        {% assign i = 0 %}
+        {% for product in collections[section.settings.home_featured_products].products %}
+        {%assign m = i | modulo:2 %}
+
+        {% if m == 0 %}<div class="grid__item">{% endif %}
+
+        {% render 'product-card',
+            product_card_product: product,
+            media_size: section.settings.image_ratio,
+            show_secondary_image: section.settings.show_secondary_image,
+            add_image_padding: section.settings.add_image_padding,
+            show_vendor: section.settings.show_vendor,
+            show_image_outline: section.settings.show_image_outline,
+            show_rating: section.settings.show_rating
+          %}
+
+        {% if m != 0 %}</div>{% endif %}
+        {% assign i = i | plus:1 %}
+
+        {% endfor %}
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% schema %}
+  {
+    "name": "Home Featured collection",
+	"class": "home-products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+	  {
+        "type": "image_picker",
+        "id":"collection_img",
+        "label":"select images"
+      },
+      {
+        "type": "collection",
+        "id": "home_featured_products",
+        "label": "Collection"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_view_all",
+        "default": true,
+        "label": "t:sections.featured-collection.settings.show_view_all.label"
+      }
+    ],
+    "presets": [{
+      "name": "Home Featured collection",
+      "category": "Collection"
+    }],
+    "blocks" : []
+  }
+{% endschema %}
+
+<script type="text/javascript">
+      collection = jQuery.noConflict();
+      collection(document).ready(function() {
+        if (collection(".home-products .home-product-list").length>0) {
+          collection(".home-products .home-product-list").owlCarousel({
+            items : 3,
+            itemsCustom : false,
+            scrollPerPage: true,
+            slideSpeed: 500,
+            stopOnHover: true,
+            itemsDesktop : [1199,3],
+            itemsDesktopSmall : [991,3],
+            itemsTablet: [767,2],
+            itemsTabletSmall: false,
+            itemsMobile : [600,1],
+            singleItem : false,
+            itemsScaleUp : false,
+            pagination : false,
+            navigation : true,
+            navigationText : ["prev","next"]
+
+          });
+        }
+      });
+    </script>
+
+    <style>
+    .home-products {
+   	 padding: 0;
+   }
+     .home-products .page-width{
+     	padding:0;
+       max-width:1600px;
+       margin:0 auto 0 0;
+     }
+    .home-products .collection_img {
+   	 display: inline-block;
+   	 vertical-align: top;
+   	 width: 39%;
+   	 position: relative;
+   }
+    .home-products .collection_img img {
+   	 width: 100%;
+   }
+    .home-products .collection_img .pageTitle {
+   	 position: absolute;
+   	 top: 65px;
+   	 left: 0;
+   	 width: 100%;
+   }
+    .home-products .collection_img .pageTitle h2 {
+   	 color: #fff;
+   	 font-size: 60px;
+      font-family: 'Oswald', sans-serif;
+      margin:0 0 10px;
+   }
+     .home-products .collection_img .pageTitle .view_all_collection a {
+     	font-size:15px;
+       font-weight:700;
+       color:#fff;
+       text-transform:uppercase;
+     }
+    .home-products .collection_right {
+   	 display: inline-block;
+   	 vertical-align: top;
+   	 width: 61%;
+   	 margin-left: -5px;
+   	 padding-left: 20px;
+   }
+    .home-products .collection_right .grid-uniform {
+   	 margin: 0;
+   	 overflow: visible;
+   	 position: relative;
+   }
+     .home-products .collection_right .grid-uniform .media>img{
+     	position:relative;
+       height:270px;
+       width:100%;
+     }
+    .home-products .collection_right .grid-uniform .grid__item {
+   	 clear: none !important;
+   	 width: 100%;
+   }
+     .home-products .collection_right .grid-uniform .card-wrapper{
+     	padding:25px;
+       border-right:solid 1px #cccccc;
+     }
+    .home-products .collection_right .grid-uniform .card-wrapper:last-child {
+   	 border-top:solid 1px #cccccc;
+   }
+    .home-products .collection_right .grid-uniform .grid__item .grid-product__wrapper {
+   	 padding: 0;
+   }
+     .home-products .collection_right .grid-uniform .grid__item .card-information__wrapper{
+     	text-align:left;
+       padding:0;
+       position:relative;
+     }
+     .home-products .collection_right .grid-uniform .grid__item .card-information__wrapper .button{
+     	height:50px;
+       width:50px;
+       font-size:0;
+       border:none;
+       padding:0;
+       background:url("add_ic.png") no-repeat center center;
+       position: absolute;
+       top: 0;
+       right: 0;
+     }
+     .home-products .collection_right .grid-uniform .grid__item .card-information__wrapper .button img{
+     	display:none;
+     }
+     .home-products .collection_right .grid-uniform .grid__item .card-information__text{
+     	height:57px;
+       padding-right:70px;
+     }
+     .home-products .collection_right .card-information__wrapper>.price{
+     	justify-content: flex-start;
+       margin:0;
+     }
+     .home-products .collection_right .grid-uniform .owl-item{
+     	padding:0;
+     }
+    .home-products .collection_right .owl-theme .owl-controls {
+   	 position: absolute;
+   	 right: calc(100% + 20px);
+   	 top: 210px;
+   	 width: calc(61% + 40px);
+   }
+    .home-products .collection_right .owl-theme .owl-controls .owl-prev, .home-products .collection_right .owl-theme .owl-controls .owl-next {
+   	 position: relative;
+   	 top: auto;
+   	 transform: none;
+   	 display: inline-block;
+   	 margin: 0 5px;
+   	 vertical-align: middle;
+   	 right: auto;
+   	 left: auto;
+   }
+    </style>

@@ -1,0 +1,130 @@
+{% if section.settings.heading != blank %}
+<div class="pageTitle">
+  <h2>{{ section.settings.heading }}</h2>
+</div>
+{% endif %}
+<div class="cat_block">
+  {% for block in section.blocks %}
+  <div class="col {% if block.settings.image_align == 'left' %}left_image {% endif %}{% if block.settings.image_align == 'right' %}right_image {% endif %}" style="background:{{ block.settings.bg_color }}">
+    <div class="colIn">
+      {% if block.settings.image != blank %}
+        <div class="cat_img">
+          <img src="{{ block.settings.image | img_url: 'master' }}" alt="">
+        </div>
+      {% endif %}
+    <div class="cat_content">
+      <div class="content_in">
+        {% if block.settings.catTitle != blank %}
+        <h2 class="cat_image" style="color:{{ block.settings.text_color }}">{{ block.settings.catTitle }}</h2>
+        {% endif %}
+        {% if block.settings.text != blank %}
+        {{ block.settings.text }}
+        {% endif %}
+        {% if block.settings.link != blank %}
+        <a href="{{ block.settings.link }}" class="btn" style="background:{{ block.settings.btn_bg_color }}">{{ block.settings.btn }}</a>
+        {% endif %}
+      </div>
+    </div>
+   </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Categories Thumbnail",
+  "class": "catSec",
+  "max_blocks": 9,
+  "settings": [
+     {
+        "type":"text",
+        "id":"heading",
+        "label":"Enter Heading"
+      }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#f7f0fd"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+        "type": "select",
+        "id": "image_align",
+        "label": "Image position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+        {
+          "type": "text",
+          "id": "catTitle",
+          "label": "Categories Title"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#000"
+        },
+        {
+          "type":"richtext",
+          "id":"text",
+          "label":"Enter Text"
+        },
+        {
+          "type":"text",
+          "id":"btn",
+          "label":"Button Label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Button Background Color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories Thumbnail",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

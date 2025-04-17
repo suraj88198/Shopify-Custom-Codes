@@ -1,0 +1,82 @@
+
+
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+strong, b { font-weight: bold; }
+em, i { font-style: italic; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+img { border: 0; max-width: 100%; height: auto; width: 100%; }
+
+
+.searchlink {
+  display: block;
+  float: right;
+  position: relative;
+  cursor: pointer;
+  background: rgba(0,0,0,0.2) url("search_ic.png") no-repeat center center;
+  height: 40px;
+  width: 40px;
+}
+
+.searchlink.open > .searchform {
+  display: block;
+}
+
+
+/** search field **/
+.searchform {
+  display: none;
+  position: absolute;
+  width: 300px;
+  height: auto;
+  line-height: 40px;
+  top: 100%;
+  right: 0;
+  padding:15px;
+  cursor: default;
+  background: #3a3a3a;
+}
+
+.searchlink.open .searchform {
+  display: block;
+}
+
+#search {
+  display: block;
+  position: relative;
+}
+
+#s {
+  width: 270px;
+  background: #272727;
+  padding: 8px 11px;
+  border: 0;
+  color: #eee;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.sbtn {
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  background: url("search_ic.png") no-repeat left center;
+  border: none;
+  height: 33px;
+  width: 33px;
+  color: #bcbcbc;
+  font-size: 0.6em;
+  cursor: pointer;
+}
+
+
+
+/** media queries **/
+@media screen and (max-width: 515px) {
+  .navigation li { display: none; }
+  .navigation li.threebar { display: block; }
+
+}

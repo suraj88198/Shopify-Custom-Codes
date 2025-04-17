@@ -1,0 +1,80 @@
+<div class="mobile_footer_menu">
+          <ul class="accordion">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+              {%- when 'link_list' -%}
+            <li>
+                {%- if block.settings.heading != blank -%}
+                <h3>{{- block.settings.heading | escape -}}</h3>
+              {%- endif -%}
+                {%- if block.settings.menu != blank -%}
+                  <ul class="footer-block__details-content list-unstyled">
+                    {%- for link in block.settings.menu.links -%}
+                      <li>
+                        <a href="{{ link.url }}" class="link link--text list-menu__item list-menu__item--link{% if link.active %} list-menu__item--active{% endif %}">
+                          {{ link.title }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+
+                  {%- endif -%}
+            </li>
+                  {%- endcase -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+
+<style rel="stylesheet">
+.accordion
+{   list-style: none;
+ padding:0;
+ margin:0;
+}
+.accordion h3
+{
+margin:0;
+ padding:15px 0;
+ background:url("down_ic.png") no-repeat center right 8px;
+ letter-spacing: 0px;
+color: #7AAFC4;
+font-size:18px;
+font-weight:500;
+ text-transform:none;
+ cursor:pointer;
+border-bottom: solid 2px #7AAFC4;
+}
+.accordion ul[style="display: block;"] .accordion1 {display:block !important;}
+.accordion > li > ul {display:none;}
+.accordion1 > li > ul {display:none;}
+.accordion ul {
+ margin:1em 0;
+ font-size:14px;
+ color:#000;
+ padding:0;
+ list-style:disc;
+}
+.accordion li.active h3{  background:url("up_ic.png") no-repeat center right 8px;}
+.accordion ol{ margin-bottom:0.75em;}
+</style>
+        <script type="text/javascript">
+    $(".accordion > li > h3").click(function(){
+
+	if(false == $(this).next().is(':visible')) {
+		$('.accordion ul').slideUp(300);
+	}
+
+	var classnm = $(this).parent('li').attr("class");
+	// Line Added to remove the active class from all 'li'
+	$('.accordion > li').removeClass('active');
+	// Line Added to remove the blank attribute of class from all 'li'
+	$('.accordion > li[class=""]').removeAttr('class');
+	// Line Added to add the active class in current 'li'
+
+	$(this).next().slideToggle(300);
+
+	if(classnm == "undefined" || classnm == "" || classnm == undefined){
+		$(this).parent('li').addClass('active');
+	}
+});
+      </script>

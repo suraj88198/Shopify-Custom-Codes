@@ -1,0 +1,77 @@
+<section class="main-content">
+	<div class="container">
+		<div class="blogs">
+			{% for block in section.blocks %}
+				{% if block.settings.blog-heading != blank %}
+			<div class="blog-box">
+				<div class="blog-img"><img class="" src="{{block.settings.blog-img | img_url : 'master'}}"></div>
+				<div class="blog-text">
+					<h5 class="blog-title">{{block.settings.blog-heading}}</h5>
+				</div>	
+			</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</section>	
+
+{% schema %}
+{
+	"name" : "Block Section",
+	"class" : "blog-section blog-2",
+	"max_blocks" : 3,
+	"settings" : [
+	],
+	"blocks" : [
+	{
+		"name" : "text",
+		"type" : "text",
+		"settings" : [
+		{
+			"type" : "image_picker",
+			"id" : "blog-img",
+			"label" : "img"
+		},
+		{
+			"type" : "text",
+			"id" : "blog-heading",
+			"label" : "Heading"
+		}
+		]
+	}
+	],
+	"presets" : [
+	{
+		"name": "Block Section",
+        	"category": "text",
+			"blocks": [
+			    {
+			        "type": "text"
+			    }
+			]
+	}
+	]
+}	
+{% endschema %}
+
+
+{% stylesheet %}
+.blog-2{padding-bottom:100px;}
+.blog-section .main-content .blogs {display: flex; column-gap: 30px;}
+.blog-section .main-content .text-center-1 h1{font-size: 15px; font-family: 'Barlow Condensed', sans-serif; font-weight: 400; color: #666666; text-transform: uppercase;  position: relative;
+ letter-spacing: 6px; margin-bottom: 5px;}
+.blog-section .main-content .text-center-1 h2{font-size: 45px; font-family: 'Gilda Display', serif; font-weight: 400; color: #222; position: relative; margin-bottom: 20px; line-height: 1.25em;
+ margin-top: 0px;}
+.blog-section{background: #f8f5f0;}
+.blog-section .main-content .text-center-1{padding: 110px 0px 0px 0px;}
+.blog-section .blogs .blog-box{position: relative; cursor: pointer; margin-bottom:23px; overflow:hidden;}
+.blog-section .blogs .blog-box:after {content: "BOOK"; font-size: 15px; color: #ffffff; position: absolute; right: 5px; border: 1px solid #fff; top: 35px; cursor:pointer;
+ font-family: Barlow Condensed,sans-serif; padding: 2px 10px; letter-spacing: 3px; transform: rotate(-90deg);}
+.blog-section .blogs .blog-box:hover .blog-text{padding-bottom:30px; transition: 0.3s;}
+.blog-section .blogs .blog-box .blog-text{position: absolute; bottom: 40px; left: 20px; transition:0.3s;}
+.blog-section .blogs .blog-box .blog-text h5{color: #ffffff; font-size: 27px; font-weight: 400; margin: 5px 0px; font-family: 'Gilda Display', serif; position: relative; width: 320px;}
+.blog-section .blogs .blog-box .blog-text h5:after{background:#ffffff8f; height:1px; position: absolute; width:70px; bottom: -10px; content:""; left:0px; transition: 0.8s;}
+.blog-section .blogs .blog-box:hover .blog-text h5:after{width:100%;}
+.blog-section .blogs .blog-box .blog-img img{transition: all 1s ease;}
+.blog-section .blogs .blog-box .blog-img img:hover{transition: all 1s ease; transform: scale(1.09, 1.09);}
+{% endstylesheet %}

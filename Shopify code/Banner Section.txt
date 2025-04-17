@@ -1,0 +1,124 @@
+<div class="page-width">
+  <div class="banner_list">
+    {% for block in section.blocks %}
+      <div class="banner-slide">
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+        {% endif %}
+        {% if block.settings.mobile_image != blank %}
+          <img class="mobile_image" src="{{ block.settings.mobile_image | img_url: 'master' }}" alt="">
+        {% endif %}
+        {% if block.settings.banner_image != blank %}
+          <img src="{{ block.settings.banner_image | img_url: 'master' }}" alt="">
+        {% endif %}
+            <div class="banner_info">
+          {% if block.settings.heading != blank %}
+            <h2>{{ block.settings.heading | escape }}</h2>
+          {% endif %}
+          {{ block.settings.text }}
+          {% if block.settings.link != blank %}
+            <span class="btn-effect">
+              {{ block.settings.link_btn | escape }}
+            </span>
+          {% endif %}
+        </div>
+        {% if block.settings.link != blank %}
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+   "name":"Banner Section",
+   "class":"banner_slider",
+   "settings":[
+
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"Image",
+         "settings":[
+           {
+               "type":"image_picker",
+               "id":"banner_image",
+               "label":"Desktop Image"
+            },
+           {
+               "type":"image_picker",
+               "id":"mobile_image",
+               "label":"Mobile Image"
+            },
+            {
+               "type":"url",
+               "id":"link",
+               "label":"Link",
+               "info":"Optional"
+            },
+            {
+               "type":"text",
+               "id":"heading",
+               "label":"Heading"
+            },
+            {
+               "type":"richtext",
+               "id":"text",
+               "label":"Text"
+            },
+            {
+               "type":"text",
+               "id":"link_btn",
+               "label":"Button Name",
+               "default": "Shop Now"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":"Banner Section"
+      }
+   ]
+}
+{% endschema %}
+
+
+{% javascript %}
+
+  $(".banner_slider .banner_list").slick({
+    dots: true,
+    infinite: true,
+    arrows: true,
+    speed: 1000,
+    slidesToShow: 1,
+    adaptiveHeight: true,
+  });
+ 
+{% endjavascript %}
+
+{% startstyle %}
+.slick-arrow{  padding:0; margin:0; width:58px; height:58px; text-indent: -9999px; border: 0; background-color: transparent; position: absolute; top: 50%; bottom: auto;  z-index: 1; cursor: pointer; transform: translateY(-50%);}
+.slick-arrow.slick-prev{ background: url(prev-arrow.png) no-repeat; left:-28px; right: auto; background-size: contain;} 
+.slick-arrow.slick-next{ background: url(next-arrow.png) no-repeat; left:auto; right: -28px; background-size: contain;}
+.slick-arrow.slick-prev:hover{ background: url(prev-arrow-hover.png) no-repeat; background-size: contain;}
+.slick-arrow.slick-next:hover{ background: url(next-arrow-hover.png) no-repeat; background-size: contain;}
+.slick-arrow.slick-prev.slick-disabled{ background: url(prev-arrow.png) no-repeat; cursor: not-allowed; background-size: contain;}
+.slick-arrow.slick-next.slick-disabled{ background: url(next-arrow.png) no-repeat; cursor: not-allowed; background-size: contain;}
+
+.banner_slider{ overflow-x: hidden;}
+.banner_slider .slick-slide>div {display: flex;}
+.banner_slider .banner-slide .mobile_image {display: none;}
+.banner_slider .banner_list > div {width:100%;}
+.banner_slider .banner_list > .banner-slide {display:none;}
+.banner_slider .banner_list > .banner-slide:first-child {display:flex;}
+.banner_slider .banner-slide { position: relative; }
+.banner_slider .banner_info { position: absolute; top: 13%; left: 11%; }
+.banner_slider .banner_info h2{ margin: 0px; color: #FFF; font-family: "American Captain"; font-size: 206px; font-style: normal; font-weight: 400; line-height: 1;}
+.banner_slider .banner_info p { margin: 0px 0px 16px; color: #FFF; font-family: Manrope; font-size: 50px; font-style: normal; font-weight: 400; line-height: 1; }
+.banner_slider .slick-dots{ list-style: none; margin: 0px; padding: 0px; position: absolute; width: 100%; justify-content: center; bottom: 15px; gap: 18px; display: none !important;} 
+.banner_slider .slick-dots li{  margin: 0px; padding: 0px;} 
+.banner_slider .slick-dots li button{  margin: 0px; padding: 0px; border: 0px; font-size: 0px; width: 15px; height: 15px; display: block; background-color: rgba(0, 0, 0, 0.5); transition: all 0.5s ease; border-radius: 100%;} 
+.banner_slider .slick-dots li button:hover, .banner_slider .slick-dots li.slick-active button{  background-color: rgba(0, 0, 0, 1); outline: 1px solid #000; outline-offset: 3px;} 
+{% endstylesheet %}

@@ -1,0 +1,252 @@
+<div class="productSliderTab productSliderHome">
+  <div class="tab-container">
+    <div class="container">
+      <ul class="tabs">
+        <li class="active" rel="tab1">{{ section.settings.title1 }}</li>
+        <li rel="tab2">{{ section.settings.title2 }}</li>
+        <li rel="tab3">{{ section.settings.title3 }}</li>
+      </ul>
+      <div class="tab_container">
+        <h3 class="d_active tab_drawer_heading" rel="tab1">{{ section.settings.title1 }}</h3>
+        <div id="tab1" class="tab_content">
+          <div class="collection-listing products-slider">
+            <div class="product-list">
+              {% assign collection = collections[section.settings.collection] %}
+              {% for product in collection.products %}
+                {% include 'product-block' with product %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <h3 class="tab_drawer_heading" rel="tab2">{{ section.settings.title2 }}</h3>
+        <div id="tab2" class="tab_content">
+          <div class="collection-listing products-slider">
+            <div class="product-list">
+              {% assign collection = collections[section.settings.collection2] %}
+              {% for product in collection.products %}
+                {% include 'product-block' with product %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <h3 class="tab_drawer_heading" rel="tab3">{{ section.settings.title3 }}</h3>
+        <div id="tab3" class="tab_content">
+          <div class="collection-listing products-slider">
+            <div class="product-list">
+              {% assign collection = collections[section.settings.collection3] %}
+              {% for product in collection.products %}
+                {% include 'product-block' with product %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="view_all">
+        {% if section.settings.link != blank %}
+        <a href="{{ section.settings.link }}" class="button">{{ section.settings.btn }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style media="screen">
+.productSliderTab{
+  padding: 50px 0 0;
+
+  ul.tabs {
+    display: block;
+    margin: 0 0 20px;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    &:after{
+      position: absolute;
+      content: "";
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #d8d8d8;
+      z-index: -1;
+    }
+
+    li{
+      display: inline-block;
+      font-size: 34px;
+      height: auto;
+      font-weight: 700;
+      line-height: 60px;
+      margin: 0;
+      padding: 0 30px;
+      width: auto;
+      color: #000000;
+      position: relative;
+      text-transform: uppercase;
+      z-index: 1;
+      cursor: pointer;
+
+      &:after{
+        position: absolute;
+        content: "";
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #4f8518;
+        z-index: -1;
+        opacity: 0;
+      }
+      &:before{
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: -10px;
+        height: 11px;
+        width: 100%;
+        background: url("tab_caret.png") no-repeat bottom center;
+        opacity: 0;
+      }
+
+      &.active{
+        color: #000;
+
+        &:after{
+          opacity: 1;
+        }
+        &:before{
+          opacity: 1;
+        }
+      }
+    }
+    }
+
+    .tab_container{
+      .tab_drawer_heading{
+        display: none;
+        margin: 0 0 20px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20px;
+        color: #000000;
+        line-height: 1;
+        text-align: center;
+        font-family: 'Century Gothic';
+        padding: 10px;
+        background: #f2fbe9;
+      }
+    }
+    .view_all{
+      text-align: center;
+    }
+}
+</style>
+<script type="text/javascript">
+// tabbed content
+// http://www.entheosweb.com/tutorials/css/tabs.asp
+$(".tab-container .tab_content").hide();
+// $(".tab-container .tab_content:first").show();
+$('.tab-container').each(function(k,v){
+  $(v).find('.tab_content:first').show();
+});
+
+/* if in tab mode */
+$("ul.tabs li").click(function() {
+  var parent = $(this).parents('.tab-container');
+
+  $(parent).find(".tab_content").hide();
+  var activeTab = $(this).attr("rel");
+  $(parent).find("#"+activeTab).fadeIn();
+
+  $(parent).find("ul.tabs li").removeClass("active");
+  $(this).addClass("active");
+
+  $(parent).find(".tab_drawer_heading").removeClass("d_active");
+  $(parent).find(".tab_drawer_heading[rel^='"+activeTab+"']").addClass("d_active");
+
+});
+/* if in drawer mode */
+$(".tab_drawer_heading").click(function() {
+  var parent = $(this).parents('.tab-container');
+
+  $(parent).find(".tab_content").hide();
+  var d_activeTab = $(this).attr("rel");
+  $(parent).find("#"+d_activeTab).fadeIn();
+
+  $(parent).find(".tab_drawer_heading").removeClass("d_active");
+  $(this).addClass("d_active");
+
+  $(parent).find("ul.tabs li").removeClass("active");
+  $(parent).find("ul.tabs li[rel^='"+d_activeTab+"']").addClass("active");
+});
+
+
+/* Extra class "tab_last"
+   to add border to right side
+   of last tab */
+$('ul.tabs li').last().addClass("tab_last");
+</script>
+
+{% schema %}
+  {
+    "name": "Collection Tab",
+    "settings": [
+	  {
+  		"type":"text",
+  		"id":"title1",
+  		"label":"Title"
+	  },
+	  {
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+	  {
+    	"type":"text",
+    	"id":"title2",
+    	"label":"Title"
+	  },
+	  {
+      "id": "collection2",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+    	"type":"text",
+    	"id":"title3",
+    	"label":"Title"
+	  },
+	  {
+      "id": "collection3",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+      "type":"text",
+      "id":"btn",
+      "label":"View All Button"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "View All Link"
+    }
+
+],
+"presets":[
+	{
+		"name":"Collection Tab",
+		"category":"New"
+	}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
