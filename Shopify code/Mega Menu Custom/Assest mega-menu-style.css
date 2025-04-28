@@ -1,0 +1,51 @@
+body .header { padding: 0;}
+.list-menu li .link { padding: 20px 25px 20px 20px; }
+
+.mega-menu-main {
+    -webkit-box-shadow: inset 0 0 0 1px #eaeaea, 0 5px 20px rgb(0 0 0 / 15%);
+    box-shadow: inset 0 0 0 1px #eaeaea, 0 5px 20px #00000026;
+    box-shadow: 0 0 3px #00000026;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.mega-menu-main .mega-menu_list {margin: 0;padding: 0;}
+.mega-menu_list ul {margin: 0;padding: 0;}
+.mega_menu_main-aa { display: flex; width: 100%; gap: 20px; justify-content: space-between; padding: 20px; }
+.mega_menu_main-aa .mega_menu_sub { width: 100%;}
+.mega_menu_main-aa .mega_menu_sub .menu_title .mobile_title { display: none; }
+.mega_menu_main-aa .mega_menu_sub .menu_title span { color: #000000; text-transform: uppercase; font-size: 14px; padding: 0 0 13px; display: block; border-bottom: 1px solid #eee; font-weight: 600; margin-bottom: 15px; }
+.mega_menu_main-aa .menu_links ul {margin:0;padding:0;}
+.mega_menu_main-aa .menu_links ul li {margin:0;padding:0;display: block;}
+.mega_menu_main-aa .menu_links ul li a {padding: 12px 0;line-height: 1.5;position: relative;margin:0;font-size:14px;color:#878787;font-weight:400;text-decoration: none;transition:all 0.5s ease;position: relative;}
+.mega_menu_main-aa .menu_links ul li a:hover {color: #000000;}
+
+.mega_menu_main-aa .menu_links ul li a sup {
+    position: absolute;
+    font-size: 9px;
+    padding: 2px 8px 1px 8px;
+    border-radius: 50px;
+    top: 50%;
+    line-height: 1.6;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    right: -40px;
+    margin-top: -5px;
+    -webkit-transition: opacity .3s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out;
+    -o-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out;
+    opacity: 1;
+}
+.mega_menu_main-aa .menu_links ul li a sup.new {color: #ffffff;background: #01bad4;}
+.mega_menu_main-aa .menu_links ul li a sup.hot {color: #ffffff;background: #ff3e11;}
+
+
+@media(max-width:989px){
+  .mega_menu_main-aa {flex-wrap: wrap;}
+
+  .mega_menu_main-aa .mega_menu_sub .menu_title .mobile_title {display: block;}
+  .mega_menu_main-aa .mega_menu_sub .menu_title .desktop_title {display: none;}
+}

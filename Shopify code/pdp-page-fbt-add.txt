@@ -1,0 +1,76 @@
+{% if product.metafields.custom.multiple_products != blank %}
+      <form id="multi-product-form">
+        <div class="fbt-products">
+          {% for related_product in product.metafields.custom.multiple_products.value %}
+            {% assign full_product = all_products[related_product.handle] %}
+            
+            <div class="meta-product">
+              <label class="block cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  name="items[]" 
+                  value="{{ full_product.variants.first.id }}" 
+                  class="mb-2">
+                  
+                <a href="{{ full_product.url }}">
+                  <img
+                    src="{{ full_product.featured_image | image_url: width: 400 }}"
+                    alt="{{ full_product.title }}"
+                    class="w-full"
+                  >
+                  <h3 class="text-lg font-semibold">{{ full_product.title }}</h3>
+                  <p class="text-gray-700">{{ full_product.price | money }}</p>
+                </a>
+              </label>
+            </div>
+            
+          {% endfor %}
+        </div>
+    
+        <div class="ftb-add-main">
+          <button type="button" onclick="addSelectedToCart()" class="button ftb-add-btn">
+            Add Selected to Cart
+          </button>
+        </div>
+      </form>
+      
+      <script>
+      function addSelectedToCart() {
+        var selected = $('input[name="items[]"]:checked');
+        if (selected.length === 0) {
+          alert('Please select at least one product.');
+          return;
+        }
+        var requests = [];
+        selected.each(function(index, checkbox) {
+          requests.push(
+            $.ajax({
+              url: '/cart/add.js',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                id: $(checkbox).val(),
+                quantity: 1
+              }),
+              success: function(response) {
+                console.log('Product added:', response);
+              },
+              error: function() {
+                console.error('Failed to add product.');
+              }
+            })
+          );
+        });
+      
+        // Wait for all requests to finish before showing the alert and redirecting
+        Promise.all(requests)
+          .then(function() {
+            alert('Selected products added to cart!');
+               window.location.href = '/cart';
+          })
+          .catch(function() {
+            alert('There was an error adding the products to the cart.');
+          });
+      }
+    </script>  
+    {% endif %}

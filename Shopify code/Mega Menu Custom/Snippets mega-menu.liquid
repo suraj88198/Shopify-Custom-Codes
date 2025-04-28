@@ -1,0 +1,96 @@
+<div class="mega_menu_main-aa">
+  {% assign link_title = link | downcase %}
+  {% for block in section %}
+    {% assign mega_menu_title = block.settings.mega-menu-title | downcase %}
+    {% if mega_menu_title == link_title %}
+      {%- if block.settings.menu01.links != blank -%}
+        <div class="mega_menu_sub">
+          <div class="menu_title">
+            <span class="desktop_title">{{ block.settings.menu-title-01 }}</span>
+            <span class="mobile_title">{{ block.settings.menu-title-01 }}</span>
+          </div>
+          <div class="menu_links">
+            <ul>
+              {%- for link in block.settings.menu01.links -%}
+                <li>
+                  {% if link.title contains '|' %}
+                    {% assign split_title = link.title | split: ' | ' %}
+                    <a href="{{ link.url }}">{{ split_title[0] }} <sup class="{{ split_title[1] | handleize }}">{{ split_title[1] }}</sup></a>
+                  {% else %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      {%- if block.settings.menu02.links != blank -%}
+        <div class="mega_menu_sub">
+          <div class="menu_title">
+            <span class="desktop_title">{{ block.settings.menu-title-02 }}</span>
+            <span class="mobile_title">{{ block.settings.menu-title-02 }}</span>
+          </div>
+          <div class="menu_links">
+            <ul>
+              {%- for link in block.settings.menu02.links -%}
+                <li>
+                  {% if link.title contains '|' %}
+                    {% assign split_title = link.title | split: ' | ' %}
+                    <a href="{{ link.url }}">{{ split_title[0] }} <sup class="{{ split_title[1] | handleize }}">{{ split_title[1] }}</sup></a>
+                  {% else %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      {%- if block.settings.menu03.links != blank -%}
+        <div class="mega_menu_sub">
+          <div class="menu_title">
+            <span class="desktop_title">{{ block.settings.menu-title-03 }}</span>
+            <span class="mobile_title">{{ block.settings.menu-title-03 }}</span>
+          </div>
+          <div class="menu_links">
+            <ul>
+              {%- for link in block.settings.menu03.links -%}
+                <li>
+                  {% if link.title contains '|' %}
+                    {% assign split_title = link.title | split: ' | ' %}
+                    <a href="{{ link.url }}">{{ split_title[0] }} <sup class="{{ split_title[1] | handleize }}">{{ split_title[1] }}</sup></a>
+                  {% else %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      {%- if block.settings.menu04.links != blank -%}
+        <div class="mega_menu_sub">
+          <div class="menu_title">
+            <span class="desktop_title">{{ block.settings.menu-title-04 }}</span>
+            <span class="mobile_title">{{ block.settings.menu-title-04 }}</span>
+          </div>
+          <div class="menu_links">
+            <ul>
+              {%- for link in block.settings.menu04.links -%}
+                <li>
+                {% if link.title contains '|' %}
+                  {% assign split_title = link.title | split: ' | ' %}
+                  <a href="{{ link.url }}">{{ split_title[0] }} <sup class="{{ split_title[1] | handleize }}">{{ split_title[1] }}</sup></a>
+                {% else %}
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
