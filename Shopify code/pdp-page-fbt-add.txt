@@ -1,76 +1,106 @@
 {% if product.metafields.custom.multiple_products != blank %}
-      <form id="multi-product-form">
-        <div class="fbt-products">
-          {% for related_product in product.metafields.custom.multiple_products.value %}
-            {% assign full_product = all_products[related_product.handle] %}
-            
-            <div class="meta-product">
-              <label class="block cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  name="items[]" 
-                  value="{{ full_product.variants.first.id }}" 
-                  class="mb-2">
-                  
-                <a href="{{ full_product.url }}">
-                  <img
-                    src="{{ full_product.featured_image | image_url: width: 400 }}"
-                    alt="{{ full_product.title }}"
-                    class="w-full"
-                  >
-                  <h3 class="text-lg font-semibold">{{ full_product.title }}</h3>
-                  <p class="text-gray-700">{{ full_product.price | money }}</p>
-                </a>
-              </label>
-            </div>
-            
-          {% endfor %}
+  <form id="multi-product-form">
+    <div class="fbt-products">
+      {% for related_product in product.metafields.custom.multiple_products.value %}
+        {% assign full_product = all_products[related_product.handle] %}
+        {% assign index = forloop.index0 %}
+        
+        <div class="meta-product" data-product-index="{{ index }}">
+          <label class="block cursor-pointer">
+            <input 
+              type="checkbox" 
+              class="product-checkbox mb-2"
+              data-index="{{ index }}"
+            >
+
+            <a href="{{ full_product.url }}">
+              <img
+                id="product-image-{{ index }}"
+                src="{{ full_product.featured_image | image_url: width: 400 }}"
+                alt="{{ full_product.title }}"
+                class="w-full mb-2"
+                width=""
+                height=""
+              >
+            </a>
+
+            <h3 class="text-lg font-semibold">{{ full_product.title }}</h3>
+
+            <p class="text-gray-700" id="product-price-{{ index }}">
+              {{ full_product.variants.first.price | money }}
+            </p>
+
+            <select class="variant-select" data-index="{{ index }}">
+              {% for variant in full_product.variants %}
+                <option 
+                  value="{{ variant.id }}"
+                  data-price="{{ variant.price | money }}"
+                  data-image="{{ variant.image | default: full_product.featured_image | image_url: width: 400 }}">
+                  {{ variant.title }} - {{ variant.price | money }}
+                </option>
+              {% endfor %}
+            </select>
+          </label>
         </div>
-    
-        <div class="ftb-add-main">
-          <button type="button" onclick="addSelectedToCart()" class="button ftb-add-btn">
-            Add Selected to Cart
-          </button>
-        </div>
-      </form>
-      
-      <script>
-      function addSelectedToCart() {
-        var selected = $('input[name="items[]"]:checked');
-        if (selected.length === 0) {
-          alert('Please select at least one product.');
-          return;
-        }
-        var requests = [];
-        selected.each(function(index, checkbox) {
+      {% endfor %}
+    </div>
+
+    <div class="ftb-add-main mt-4">
+      <button type="button" onclick="addSelectedToCart()" class="button ftb-add-btn">
+        Add Selected to Cart
+      </button>
+    </div>
+  </form>
+
+  <script>
+    // Update price/image on variant change
+    document.querySelectorAll('.variant-select').forEach(function(select) {
+      select.addEventListener('change', function() {
+        const index = this.dataset.index;
+        const selected = this.options[this.selectedIndex];
+        const newPrice = selected.dataset.price;
+        const newImage = selected.dataset.image;
+
+        document.getElementById('product-price-' + index).textContent = newPrice;
+        document.getElementById('product-image-' + index).src = newImage;
+      });
+    });
+
+    function addSelectedToCart() {
+      const selectedProducts = document.querySelectorAll('.product-checkbox:checked');
+      if (selectedProducts.length === 0) {
+        alert('Please select at least one product.');
+        return;
+      }
+
+      const requests = [];
+      selectedProducts.forEach(function(checkbox) {
+        const index = checkbox.dataset.index;
+        const select = document.querySelector('.variant-select[data-index="' + index + '"]');
+        const variantId = select.value;
+
+        if (variantId) {
           requests.push(
-            $.ajax({
-              url: '/cart/add.js',
-              type: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                id: $(checkbox).val(),
-                quantity: 1
-              }),
-              success: function(response) {
-                console.log('Product added:', response);
-              },
-              error: function() {
-                console.error('Failed to add product.');
-              }
+            fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: variantId, quantity: 1 })
+            }).then(res => {
+              if (!res.ok) throw new Error();
+              return res.json();
             })
           );
+        }
+      });
+
+      Promise.all(requests)
+        .then(function() {
+          alert('Selected products added to cart!');
+          window.location.href = '/cart';
+        })
+        .catch(function() {
+          alert('There was an error adding the products to the cart.');
         });
-      
-        // Wait for all requests to finish before showing the alert and redirecting
-        Promise.all(requests)
-          .then(function() {
-            alert('Selected products added to cart!');
-               window.location.href = '/cart';
-          })
-          .catch(function() {
-            alert('There was an error adding the products to the cart.');
-          });
-      }
-    </script>  
-    {% endif %}
+    }
+  </script>
+{% endif %}
